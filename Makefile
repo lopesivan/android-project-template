@@ -42,7 +42,10 @@ key2:
 
 key:
 	./key1.expect $(KEYPASS) $(firstname) $(lastname) $(organization) $(STOREPASS)
+	sleep 2
 	./key3.expect $(KEYPASS) $(STOREPASS)
+	sleep 2
+	openssl base64 -in $(keystore) -out key.txt
 
 keystore:
 	keytool \
@@ -53,6 +56,7 @@ keystore:
 		-keystore $(keystore)   \
 		-storepass $(STOREPASS) \
 		-keypass $(KEYPASS)
+	sleep 2
 	./key3.expect $(STOREPASS) $(KEYPASS)
 
 clean:

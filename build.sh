@@ -88,7 +88,7 @@ build() {
 	$AAPT add bin/app.unaligned.apk classes.dex
 
 	echo "Aligning and signing APK..."
-	$APKSIGNER sign --ks debug.keystore bin/app.unaligned.apk
+	$APKSIGNER sign --ks debug.keystore --ks-pass "pass:android" --ks-key-alias "ivanlopes.eng.br" bin/app.unaligned.apk
 	$ZIPALIGN -f 4 bin/app.unaligned.apk bin/app.apk
 }
 
