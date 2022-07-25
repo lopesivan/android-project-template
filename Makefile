@@ -16,8 +16,10 @@ CN        = "CN=$(firstname) $(lastname), OU=$(organization), O=$(organization),
 build:
 	make key
 	./build.sh $@
+yaml:
+	./build.sh $@
 
-init:
+init: init.yaml
 	./build.sh $@
 
 key1:
