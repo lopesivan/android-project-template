@@ -89,7 +89,7 @@ build() {
 
 	echo "Aligning and signing APK..."
 	# $APKSIGNER sign --ks debug.keystore --ks-pass "pass:android" --ks-key-alias "ivanlopes.eng.br" bin/app.unaligned.apk
-    jarsigner -verbose -sigalg MD5withRSA -digestalg SHA1 -keystore debug.keystore bin/app.unaligned.apk ivanlopes.eng.br
+    jarsigner -verbose -storepass android -sigalg MD5withRSA -digestalg SHA1 -keystore debug.keystore bin/app.unaligned.apk ivanlopes.eng.br
 	$ZIPALIGN -f 4 bin/app.unaligned.apk bin/app.apk
 }
 
