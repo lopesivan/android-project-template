@@ -1,0 +1,6 @@
+name: Your App Name
+package: your.pkg.name
+sdk:
+  dir: /home/ivan/.config/Android/Sdk
+  build-tools: 30.0.2
+  plataforms: 33
