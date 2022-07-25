@@ -16,6 +16,13 @@
 
 set -e
 
+# if exist file `_f' then remove.
+_f=init.yaml
+test ! -e $_f && {
+    echo $_f not Found >&2;
+    echo create: $0 yaml >&2;
+    exit 1; }
+
 APP_NAME="$( shyaml get-value name < init.yaml )"
 PACKAGE_NAME=""$( shyaml get-value package < init.yaml )""
 
