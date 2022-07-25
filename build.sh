@@ -1,5 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
+# Author: Ivan Lopes (lopesivan)
+# E-mail: ivanlopes (at) id.uff.br
 # Author: Authmane Terki (authmane512)
 # E-mail: authmane512 (at) protonmail.ch
 # Blog: https://medium.com/@authmane512
@@ -10,18 +12,22 @@
 # Hello! I've made this little script that allow you to init, compile and run an Android Project.
 # I tried to make it as simple as possible to allow you to understand and modify it easily.
 # If you think there is a very important missing feature, don't hesitate to do a pull request on Github and I will answer quickly.
-# Thanks! 
+# Thanks!
 
 set -e
 
-APP_NAME="Your App Name"
-PACKAGE_NAME="your.pkg.name"
+APP_NAME="$( shyaml get-value name < init.yaml )"
+PACKAGE_NAME=""$( shyaml get-value package < init.yaml )""
 
-AAPT="/path/to/android-sdk/build-tools/<your version>/aapt"
-DX="/path/to/android-sdk/build-tools/<your version>/dx"
-ZIPALIGN="/path/to/android-sdk/build-tools/<your version>/zipalign"
-APKSIGNER="/path/to/android-sdk/build-tools/<your version>/apksigner"
-PLATFORM="/path/to/android-sdk/platforms/android-<your version>/android.jar"
+SDK_DIR=$( shyaml get-value sdk.dir < init.yaml )
+BUILD_TOOLS=$( shyaml get-value sdk.build-tools < init.yaml )
+PLATAFORMS=$( shyaml get-value sdk.plataforms < init.yaml )
+
+AAPT="${SDK_DIR}/build-tools/${BUILD_TOOLS}<your version>/aapt"
+DX="${SDK_DIR}/build-tools/${BUILD_TOOLS}/dx"
+ZIPALIGN="${SDK_DIR}/build-tools/${BUILD_TOOLS}/zipalign"
+APKSIGNER="${SDK_DIR}/build-tools/${BUILD_TOOLS}/apksigner"
+PLATFORM="${SDK_DIR}/platforms/android-${PLATAFORMS}/android.jar"
 
 init() {
 	rm -rf .git README.md
@@ -32,7 +38,7 @@ init() {
 	mkdir -p res/layout
 	mkdir res/values
 	mkdir res/drawable
-	
+
 	sed "s/{{ PACKAGE_NAME }}/${PACKAGE_NAME}/" "template_files/MainActivity.java" > "$PACKAGE_DIR/MainActivity.java"
 	sed "s/{{ PACKAGE_NAME }}/${PACKAGE_NAME}/" "template_files/AndroidManifest.xml" > "AndroidManifest.xml"
 	sed "s/{{ APP_NAME }}/${APP_NAME}/" "template_files/strings.xml" > "res/values/strings.xml"
@@ -71,6 +77,25 @@ run() {
 
 PACKAGE_DIR="src/$(echo ${PACKAGE_NAME} | sed 's/\./\//g')"
 
+yaml(){
+        local template_file="init.yml"
+        local template_name="$template_file"
+
+        tput bold tput setb 3
+        echo -n "-> "
+        tput setaf 2
+        echo "$template_name"
+        tput sgr0
+        cat <<-EOF > "$template_file"
+name: Your App Name
+package: your.pkg.name
+sdk:
+  dir: \${HOME}/.config/Android/Sdk
+  build-tools: 30.0.2
+  plataforms: 33
+EOF
+}
+
 case $1 in
 	init)
 		init
@@ -80,6 +105,9 @@ case $1 in
 		;;
 	run)
 		run
+		;;
+	yaml)
+		yaml
 		;;
 	build-run)
 		build
