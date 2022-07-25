@@ -46,7 +46,7 @@ SDK_DIR=$( shyaml get-value sdk.dir < init.yaml )
 BUILD_TOOLS=$( shyaml get-value sdk.build-tools < init.yaml )
 PLATAFORMS=$( shyaml get-value sdk.plataforms < init.yaml )
 
-AAPT="${SDK_DIR}/build-tools/${BUILD_TOOLS}<your version>/aapt"
+AAPT="${SDK_DIR}/build-tools/${BUILD_TOOLS}/aapt"
 DX="${SDK_DIR}/build-tools/${BUILD_TOOLS}/dx"
 ZIPALIGN="${SDK_DIR}/build-tools/${BUILD_TOOLS}/zipalign"
 APKSIGNER="${SDK_DIR}/build-tools/${BUILD_TOOLS}/apksigner"
