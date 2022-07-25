@@ -1,9 +1,9 @@
-firstname    = ivan
-lastname     = lopes
-organization = 42algoritmos
-keystore     = debug.keystore
-   alias     = ivanlopes.eng.br
-validity     = 365
+firstname    = $(shell shyaml get-value user.firstname < init.yaml )
+lastname     = $(shell shyaml get-value user.lastname < init.yaml )
+organization = $(shell shyaml get-value user.organization < init.yaml )
+keystore     = $(shell shyaml get-value user.keystore < init.yaml )
+   alias     = $(shell shyaml get-value user.alias < init.yaml )
+validity     = $(shell shyaml get-value user.validity < init.yaml )
 
 # KEYPASS   = $(shell cat pass1.txt)
 # STOREPASS = $(shell cat pass2.txt)
