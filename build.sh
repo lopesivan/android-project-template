@@ -16,12 +16,28 @@
 
 set -e
 
+
+yaml(){
+        local template_file="init.yaml"
+        local template_name="$template_file"
+
+        tput bold tput setb 3
+        echo -n "-> "
+        tput setaf 2
+        echo "$template_name"
+        tput sgr0
+        cat <<-EOF > "$template_file"
+name: Your App Name
+package: your.pkg.name
+sdk:
+  dir: \${HOME}/.config/Android/Sdk
+  build-tools: 30.0.2
+  plataforms: 33
+EOF
+}
 # if exist file `_f' then remove.
 _f=init.yaml
-test ! -e $_f && {
-    echo $_f not Found >&2;
-    echo create: $0 yaml >&2;
-    exit 1; }
+test ! -e $_f && { echo $_f not Found >&2; yaml; exit 1; }
 
 APP_NAME="$( shyaml get-value name < init.yaml )"
 PACKAGE_NAME=""$( shyaml get-value package < init.yaml )""
@@ -84,24 +100,6 @@ run() {
 
 PACKAGE_DIR="src/$(echo ${PACKAGE_NAME} | sed 's/\./\//g')"
 
-yaml(){
-        local template_file="init.yml"
-        local template_name="$template_file"
-
-        tput bold tput setb 3
-        echo -n "-> "
-        tput setaf 2
-        echo "$template_name"
-        tput sgr0
-        cat <<-EOF > "$template_file"
-name: Your App Name
-package: your.pkg.name
-sdk:
-  dir: \${HOME}/.config/Android/Sdk
-  build-tools: 30.0.2
-  plataforms: 33
-EOF
-}
 
 case $1 in
 	init)
