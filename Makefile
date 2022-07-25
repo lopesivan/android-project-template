@@ -13,15 +13,6 @@ KEYPASS   = "android"
 STOREPASS = "android"
 CN        = "CN=$(firstname) $(lastname), OU=$(organization), O=$(organization), L=Rio de Janeiro, ST=Rio de Janeiro, C=RJ"
 
-build:
-	make key
-	./build.sh $@
-yaml:
-	./build.sh $@
-
-init: init.yaml
-	./build.sh $@
-
 key1:
 	keytool \
 		-J-Duser.language=en  \
