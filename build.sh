@@ -30,7 +30,7 @@ yaml(){
 name: Your App Name
 package: your.pkg.name
 sdk:
-  dir: \${HOME}/.config/Android/Sdk
+  dir: ${HOME}/.config/Android/Sdk
   build-tools: 30.0.2
   plataforms: 33
 EOF
@@ -120,5 +120,6 @@ case $1 in
 		;;
 	*)
 		echo "error: unknown argument"
+        echo "usage: $0 [init|build|run|yaml|build-run]"
 		;;
 esac
