@@ -53,7 +53,7 @@ APKSIGNER="${SDK_DIR}/build-tools/${BUILD_TOOLS}/apksigner"
 PLATFORM="${SDK_DIR}/platforms/android-${PLATAFORMS}/android.jar"
 
 init() {
-	rm -rf .git README.md
+	rm README.md
 	echo "Making ${PACKAGE_NAME}..."
 	mkdir -p "$PACKAGE_DIR"
 	mkdir obj
@@ -88,7 +88,7 @@ build() {
 	$AAPT add bin/app.unaligned.apk classes.dex
 
 	echo "Aligning and signing APK..."
-	$APKSIGNER sign --ks debug.keystore --ks-pass "pass:123456" bin/app.unaligned.apk
+	$APKSIGNER sign --ks debug.keystore bin/app.unaligned.apk
 	$ZIPALIGN -f 4 bin/app.unaligned.apk bin/app.apk
 }
 
