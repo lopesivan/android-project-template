@@ -88,14 +88,21 @@ build() {
 	$AAPT add bin/app.unaligned.apk classes.dex
 
 	echo "Aligning and signing APK..."
-	$APKSIGNER sign --ks debug.keystore --ks-pass "pass:android" --ks-key-alias "ivanlopes.eng.br" bin/app.unaligned.apk
+	# $APKSIGNER sign --ks debug.keystore --ks-pass "pass:android" --ks-key-alias "ivanlopes.eng.br" bin/app.unaligned.apk
+    jarsigner -verbose -sigalg MD5withRSA -digestalg SHA1 -keystore debug.keystore bin/app.unaligned.apk ivanlopes.eng.br
 	$ZIPALIGN -f 4 bin/app.unaligned.apk bin/app.apk
 }
+
 
 run() {
 	echo "Launching..."
 	adb install -r bin/app.apk
 	adb shell am start -n "${PACKAGE_NAME}/.MainActivity"
+}
+
+uninstall() {
+	echo "Remove..."
+	adb uninstall "${PACKAGE_NAME}"
 }
 
 PACKAGE_DIR="src/$(echo ${PACKAGE_NAME} | sed 's/\./\//g')"
@@ -107,6 +114,9 @@ case $1 in
 		;;
 	build)
 		build
+		;;
+	uninstall)
+		uninstall
 		;;
 	run)
 		run

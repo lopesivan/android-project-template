@@ -19,6 +19,7 @@ key1:
 		-genkey -v            \
 		-keystore $(keystore) \
 		-alias $(alias)       \
+		-sigalg MD5withRSA    \
 		-keyalg RSA           \
 		-keysize 2048         \
 		-validity $(validity)
