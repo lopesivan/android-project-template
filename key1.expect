@@ -1,0 +1,58 @@
+#!/usr/bin/expect --
+
+set pass           [lindex $argv 0]
+set first          [lindex $argv 1]
+set last           [lindex $argv 2]
+set organizational [lindex $argv 3]
+set passalias      [lindex $argv 4]
+
+send_user "Using password: $pass\n"
+spawn make key1
+
+expect "Enter keystore password:" { send "$pass\n" }
+expect "Re-enter new password:"   { send "$pass\n" }
+
+expect "What is your first and last name?"                  {
+	send "$first $last\n"
+}
+
+expect "What is the name of your organizational unit?"      {
+	send "$organizational\n"
+}
+
+expect "What is the name of your organization?"             {
+	send "$organizational\n"
+}
+
+expect "What is the name of your City or Locality?"         {
+	send "Rio de Janeiro\n"
+}
+
+expect "What is the name of your State or Province?"        {
+	send "Rio de Janeiro\n"
+}
+
+expect "What is the two-letter country code for this unit?" {
+	send "RJ\n"
+}
+
+expect "correct?" {
+	send "yes\n"
+}
+
+expect "Enter key password for <ivanlopes.eng.br>"            {
+	send "$passalias\n"
+}
+
+expect "Re-enter new password:"                              {
+	send "$passalias\n"
+}
+
+#expect "Enter source keystore password:"                              {
+#	send "$pass\n"
+#}
+#
+
+#interact
+
+# ./key.expect  senha.senha.senha ivan lopes ivanlopes

@@ -1,0 +1,16 @@
+#!/usr/bin/expect --
+
+#example of getting arguments passed from command line..
+#not necessarily the best practice for passwords though...
+set pass           [lindex $argv 0]
+set passalias      [lindex $argv 1]
+
+send_user "Using password: $pass\n"
+spawn make key2
+
+expect "Enter source keystore password:" { send "$pass\n" }
+expect "Enter key password for <ivanlopes.eng.br>"            {
+	send "$passalias\n"
+}
+
+#interact

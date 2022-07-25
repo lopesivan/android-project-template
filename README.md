@@ -14,3 +14,4 @@ https://medium.com/@authmane512/how-to-do-android-development-faster-without-gra
 
 Thanks!
 
+make clean && make key && make clean && make keystore
